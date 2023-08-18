@@ -16,6 +16,7 @@ import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
+import { WormholeComponent } from './wormhole/wormhole.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {MatIconModule} from '@angular/material/icon';
     PoolsComponent,
     CoinsComponent,
     PoolComponent,
-    ThemeSwitchComponent
+    ThemeSwitchComponent,
+    WormholeComponent
   ],
   imports: [
     BrowserModule,

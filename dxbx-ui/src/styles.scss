@@ -1,4 +1,5 @@
 @import '@angular/material/theming';
+
 @include mat-core();
 
 $light-app-theme: mat-light-theme((
@@ -7,7 +8,6 @@ $light-app-theme: mat-light-theme((
                 accent: mat-palette($mat-pink, A200, A100, A400),
                 warn: mat-palette($mat-red),
         ),
-        
 ));
 
 $dark-app-theme:   mat-dark-theme((
@@ -23,14 +23,49 @@ $dark-app-theme:   mat-dark-theme((
 @mixin body-theme($theme) {
     $_background: map-get($theme, background);
     $app-background-color: mat-color($_background, background);
-  
+    /*$app-color: mat-color($_color, color); */
+
     body {
       background-color: $app-background-color;
+      text-align: left;
+
+      .footer {
+        position: fixed;
+        bottom: 00;
+        width: 100%;
+        height: 30px;
+        background-color: $app-background-color;
+        text-align: left;
+        margin: 0px;
+        padding: 0px;
     }
+    .mat-button-toggle-label-content      {
+        line-height: 0px !important;
+        padding: 12px 10px 10px 10px !important;
+        font-size: 12px;
+        font-weight: 400;
+        margin: 0px;
+        padding: 0px;
+        
+    }
+   
+
+
+     
+    
+    }
+
+
+    
+    
+     
+    
   }
     
-  @include body-theme($light-app-theme);
+@include body-theme($light-app-theme);
   .dark-theme {
     @include angular-material-color($dark-app-theme);
     @include body-theme($dark-app-theme);
   }
+
+  
