@@ -1,29 +1,24 @@
-
-
   <button mat-button [routerLink]="['/quick']">Quick</button>
   <button mat-button [routerLink]="['/trade']">Trade</button>
   <button mat-button [routerLink]="['/pools']">Pools</button>
   <button mat-button [routerLink]="['/coins']">Coins</button>
-  <button mat-button [routerLink]="['/pool']">Pool</button>
-  <button mat-button [routerLink]="['/wormhole']">Wormhole</button>
-  <button mat-button [matMenuTriggerFor]="menu" >
-    <mat-icon>more_vert</mat-icon>
-  </button>
-  <mat-menu  #menu="matMenu">
-    <button mat-menu-item>
-      <mat-icon>dialpad</mat-icon>
-      <span>Connected</span>
-    </button>
-    <button mat-menu-item disabled>
-      <mat-icon>voicemail</mat-icon>
-      <span>Check voice mail</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>highlight</mat-icon>
-      <span>   <app-theme-switch ></app-theme-switch></span>
-    </button>
-  </mat-menu>
-  
+  <button mat-button [routerLink]="['/wormhole']">Bridge</button>
+  <button mat-button class="mymenuthreepoints"  [matMenuTriggerFor]="menu" ><mat-icon>more_vert</mat-icon></button>
+    <mat-menu  #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Connected</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voice mail</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>highlight</mat-icon>
+        <span>   <app-theme-switch ></app-theme-switch></span>
+      </button>
+    </mat-menu>
+    
 <router-outlet></router-outlet>
 
 <div class="footer" #footer>

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import{LocalstorageService} from '../localstorage.service';
+
+
 
 @Component({
   selector: 'app-wormhole',
@@ -7,13 +10,16 @@ import { Component } from '@angular/core';
 })
 export class WormholeComponent {
 
-   public mytheme = "dark";
+   public mytheme;// = {"mode":"dark"};
 
   getTheme() {
     return this.mytheme;
   }
 
-  constructor() {
+  constructor(private mypersistent:LocalstorageService) {
+    //this.mytheme= this.mypersistent.get('maintheme') 
+    this.mytheme=  JSON.stringify({ mode: 'light' });
+
     this.mount();
   }
 

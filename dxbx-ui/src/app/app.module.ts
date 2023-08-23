@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,8 +17,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule} from '@angular/material/menu';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule} from '@angular/material/icon';
 import { WormholeComponent } from './wormhole/wormhole.component';
+import { AgChartsAngularModule } from 'ag-charts-angular';
+
 
 @NgModule({
   declarations: [
@@ -30,6 +34,9 @@ import { WormholeComponent } from './wormhole/wormhole.component';
     WormholeComponent
   ],
   imports: [
+    MatSnackBarModule,
+    AgChartsAngularModule,
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

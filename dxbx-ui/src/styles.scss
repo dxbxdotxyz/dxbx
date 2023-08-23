@@ -28,7 +28,7 @@ $dark-app-theme:   mat-dark-theme((
     body {
       background-color: $app-background-color;
       text-align: left;
-
+      
       .footer {
         position: fixed;
         bottom: 00;
@@ -46,19 +46,8 @@ $dark-app-theme:   mat-dark-theme((
         font-weight: 400;
         margin: 0px;
         padding: 0px;
-        
     }
-   
-
-
-     
-    
-    }
-
-
-    
-    
-     
+ }
     
   }
     
@@ -66,6 +55,7 @@ $dark-app-theme:   mat-dark-theme((
   .dark-theme {
     @include angular-material-color($dark-app-theme);
     @include body-theme($dark-app-theme);
+    color: rgb(179, 189, 209);
   }
 
   

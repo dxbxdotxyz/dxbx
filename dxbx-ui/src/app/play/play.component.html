@@ -1,20 +1,50 @@
-
-<mat-card class="example-card">
+<mat-card class="quickCard-card">
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>index (APT) </mat-card-title>
-      <mat-card-subtitle>margin trading</mat-card-subtitle>
+      <div mat-card-avatar class="quickCard-header-image"></div>
+      <mat-card-title>index (AIP 41) </mat-card-title> <button mat-raised-button color="accent" (click)=addusdc(10) >+10 {{coinDescription}}</button>
+      <mat-card-subtitle>{{rnd_Index | number:'1.4-4'   }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-    <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button  color="primary">LIKE</button>
-      <button mat-raised-button color="accent">SHARE</button>
+    <mat-card-content>  
+    <ag-charts-angular
+    style="height: 100%"
+    [options]="options"
+    >
+  </ag-charts-angular>
+</mat-card-content>
+
+  <mat-card-actions class="quickCard-actions">
+      <table >
+        <tr>
+          <td ></td>
+          <td><button mat-button color="accent" (click)=reverseSideClicked()>Flip</button></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><button mat-button color="accent" (click)=closeAllClicked()>Close</button></td>
+          <td ></td>
+          <td><button mat-button color="accent" (click)=buyClicked()>Buy</button></td>
+          
+        </tr>
+        <tr>
+          <td ></td>
+          <td><button mat-button color="accent" (click)=sellClicked()>Sell</button></td>
+          <td></td>
+        </tr>
+        <tr>
+        </tr>
+      </table>
     </mat-card-actions>
+  <mat-card-footer>
+    <div class="quickCard-footer">
+      <div class="quickCard-footer-item">
+        <div class="quickCard-footer-item-value">Available: {{getAvailableBalance()| number:'1.4-4'  }} Margin: {{getMarginBalance()| number:'1.4-4'  }} Total: {{getTotalBalance()| number:'1.4-4'  }}</div>
+        
+
+        <div class="quickCard-footer-item-label">TSize: {{tradingSize}} {{coinDescription}}</div>
+        <div class="quickCard-footer-item-value">Contract Bal {{contractBalance}}</div>
+       <!-- <div class="quickCard-footer-item-label">Idx Position {{indexPosition}}</div> -->
+        
+      </div>
+    </div>
+  </mat-card-footer>
   </mat-card>

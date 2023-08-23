@@ -1,16 +1,16 @@
-
-.example-card {
+.quickCard-card {
     max-width: 400px;
+   
   }
   
-.example-header-image {
-background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-background-size: cover;
-}
+  .quickCard-header-image {
+    background-image: url('https://raw.githubusercontent.com/hippospace/aptos-coin-list/main/icons/Aptoslaunchlogob.svg');
+    background-size: cover;
+  }
 
-.example-container {
+  .quickCard-actions {
     display: flex;
-    flex-direction: column;
-    max-width: 400px;
-}
-    
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
