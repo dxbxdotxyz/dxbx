@@ -20,7 +20,9 @@ import { MatMenuModule} from '@angular/material/menu';
 import { MatIconModule} from '@angular/material/icon';
 import { WormholeComponent } from './wormhole/wormhole.component';
 import { AgChartsAngularModule } from 'ag-charts-angular';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { AgChartsAngularModule } from 'ag-charts-angular';
     MatButtonModule,
     MatButtonToggleModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

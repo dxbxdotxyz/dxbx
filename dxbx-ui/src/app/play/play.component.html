@@ -12,8 +12,8 @@
   </ag-charts-angular>
 </mat-card-content>
 
-  <mat-card-actions class="quickCard-actions">
-      <table >
+  <mat-card-actions class="quickCard-actions" style="width:50%;margin:auto" >
+      <table>
         <tr>
           <td ></td>
           <td><button mat-button color="accent" (click)=reverseSideClicked()>Flip</button></td>
@@ -37,11 +37,12 @@
   <mat-card-footer>
     <div class="quickCard-footer">
       <div class="quickCard-footer-item">
-        <div class="quickCard-footer-item-value">Available: {{getAvailableBalance()| number:'1.4-4'  }} Margin: {{getMarginBalance()| number:'1.4-4'  }} Total: {{getTotalBalance()| number:'1.4-4'  }}</div>
-        
+        <div class="quickCard-footer-item-value" style="font-weight: bold ;">Your Balance {{getTotalBalance() }}</div>
+        <div class="quickCard-footer-item-value"> Available: {{getAvailableBalance()| number:'1.4-4'  }}  </div>
+        <div class="quickCard-footer-item-value"> Margin: {{getMarginBalance()| number:'1.4-4'  }}   </div>
+        <div class="quickCard-footer-item-value"  style="font-weight: bolder;">Contract Balance  {{contractBalance}}</div>
 
-        <div class="quickCard-footer-item-label">TSize: {{tradingSize}} {{coinDescription}}</div>
-        <div class="quickCard-footer-item-value">Contract Bal {{contractBalance}}</div>
+        <div class="quickCard-footer-item-label" style="font-size: x-small; text-align: center;">Trading Size is {{tradingSize}} {{coinDescription}}</div>
        <!-- <div class="quickCard-footer-item-label">Idx Position {{indexPosition}}</div> -->
         
       </div>

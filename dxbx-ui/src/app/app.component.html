@@ -9,9 +9,10 @@
         <mat-icon>dialpad</mat-icon>
         <span>Connected</span>
       </button>
-      <button mat-menu-item disabled>
-        <mat-icon>voicemail</mat-icon>
-        <span>Check voice mail</span>
+      <button mat-menu-item >
+        <mat-icon>videogame_asset</mat-icon>
+        <span><mat-slide-toggle  [checked]="false" [disabled]="false" (change)="onToggleSlide( $event)"> Gamepad</mat-slide-toggle></span>
+
       </button>
       <button mat-menu-item>
         <mat-icon>highlight</mat-icon>
@@ -20,6 +21,10 @@
     </mat-menu>
     
 <router-outlet></router-outlet>
+
+
+
+
 
 <div class="footer" #footer>
   <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/risk-warning/saxo-risk-warning';" >Risk</button>

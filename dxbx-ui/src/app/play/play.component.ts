@@ -1,7 +1,7 @@
 import { Component,ViewChild , OnInit, Input, OnDestroy, numberAttribute } from '@angular/core';
 import { QuickWSService } from '../quick-ws.service';
 import {ThemeSwitchComponent} from '../theme-switch/theme-switch.component';
-//import { JoystickService, JoysticksEvent } from '../joystick.service';
+import { JoystickService, JoysticksEvent } from '../joystick.service';
 import { LocalstorageService } from '../localstorage.service';
 import { Observable } from 'rxjs';
 
@@ -27,7 +27,7 @@ export class PlayComponent  implements OnInit {
 
 /*********PLAY LOGIC************************ */
   public indexPosition:number=0;
-  private pctMargin:number=1.00;
+  private pctMargin:number=.5;
   private maxTotalBalance:number=10;
   public coinDescription:string="USDC";
   public totalBalance:number=0;
@@ -47,6 +47,7 @@ export class PlayComponent  implements OnInit {
     private res_stream1:Observable<number>;
     private stream1:any;
     private stream2:any;
+    private streamJoystick :any;
     public rnd_Index:any;
     public mychart: any;
     private myplotdata:Array<Provider> =[];
@@ -58,7 +59,7 @@ export class PlayComponent  implements OnInit {
     @ViewChild(AgChartsAngular)
     public agChart!: AgChartsAngular;
 
-    constructor(private mypersistent:LocalstorageService,private myWS:QuickWSService,private myshareddata : SharengdataService ) {
+    constructor(private mypersistent:LocalstorageService,private myWS:QuickWSService,private myshareddata : SharengdataService, private joystickService : JoystickService ) {
       
       this.res_stream1=this.myWS.priceindex$;
 
@@ -110,7 +111,7 @@ export class PlayComponent  implements OnInit {
             position: 'bottom',
             nice: true,
             tick: {
-              interval: time.second.every(30, { snapTo: this.now }),
+              interval: time.second.every(60, { snapTo: this.now }),
             },
           },
           {
@@ -139,11 +140,14 @@ ngOnInit() {
         this.applyTheme('ag-default');
       }
   } );
+  
+  this.streamJoystick =this.joystickService.getObservable().subscribe(events => this.onGamepadEvent(events))
 }
 
 ngOnDestroy(): void {
   this.stream1.unsubscribe();
   this.stream2.unsubscribe();
+  this.streamJoystick.unsubscribe();
 }
 
   applyTheme = (theme: string) => {
@@ -299,21 +303,63 @@ ngOnDestroy(): void {
     private sendOrder(size:number){
         if (Math.abs(size)>0){
         let necessaryMargin= Math.abs(this.pctMargin*(this.contractBalance+size))-this.marginBalance ;
-      //  console.log('necessaryMargin extra margin for sending order',necessaryMargin);
+      
         if (this.availableBalance>necessaryMargin){
           this.transferMarginToAvailable(-necessaryMargin);    
           this.contractBalance+=size;
+          console.log('send order 1',this.indexPosition );
           if(size>0){
+        //    console.log('send order 1',size/(this.rnd_Index*(1)));
             this.indexPosition+=size/(this.rnd_Index*(1+this.spreadfees));
+            console.log('send order 1',size/(this.rnd_Index*(1+this.spreadfees)) );
           }else{  
             this.indexPosition+=size/(this.rnd_Index*(1-this.spreadfees));
           }
-  
-          this.setTotalBalance();
+          console.log('send order 2',this.indexPosition );
+       //   this.setTotalBalance();
                    
 
         }
       }
+//      this.updateTradingData(this.rnd_Index);
+    }
+
+    onGamepadEvent(events : JoysticksEvent[]){
+      console.log('onGamepadEvent Play',events);
+      events.forEach(event => {
+        if(event.type == "pressed"){
+          switch(event.name){
+            case "RB":
+ //             this.navigatetoNext();
+            break;
+            case "LB":
+   //            this.navigatetoPrevious();
+            break;
+            case "Y":
+             if(events.length == 1){
+      //         this.PullS();
+             }
+             else if(this.joystickService.lastState.axis.RT >= 0.9){
+      //         this.PullServerHedger();
+             }
+            break;
+            case "X":
+             if(events.length == 2 && this.joystickService.lastState.axis.RT >=0.9){
+       //        this.HedgeOnSide()
+             }
+             else if(this.joystickService.lastState.axis.RT >=0.9 && this.joystickService.lastState.button.RB){
+        //       this.Hedge()
+             }
+            break;
+            case "A":
+             if(this.joystickService.lastState.axis.RT >= 0.9 ) {
+        //       this.AllLHFToTrue();
+               this.joystickService.vibrate(175, 1, 1);
+             }
+            break;
+          }
+        }
+      });
     }
 
 }
