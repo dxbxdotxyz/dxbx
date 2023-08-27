@@ -10,11 +10,11 @@ import { WormholeComponent } from './wormhole/wormhole.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'quick',
+    redirectTo: 'flipper',
     pathMatch: 'full',
     title: 'dxbx-ui',
   },
-  { path: 'quick', component: PlayComponent, title: 'quick on dxbx' },
+  { path: 'flipper', component: PlayComponent, title: 'flip on dxbx' },
   { path: 'trade', component: TradeComponent, title: 'trade on dxbx' },
   { path: 'pools', component: PoolsComponent, title: 'pools on dxbx' },
   { path: 'coins', component: CoinsComponent, title: 'coins' },

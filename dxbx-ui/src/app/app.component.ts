@@ -9,7 +9,6 @@ import { Router, RouterLinkActive } from '@angular/router';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  
 })
 export class AppComponent {
   private stream1:any;
@@ -46,7 +45,7 @@ export class AppComponent {
     
     
     setTimeout(() => {
-      if(this.useGamepad)
+      if(!this.useGamepad)
       {
         console.log('slidder Toggle to true' );
         setTimeout(() => this.useGamepad = this.joystickService.EnableGamepad(), 100);  
@@ -55,12 +54,15 @@ export class AppComponent {
         console.log('slidder Toggle enabled',this.useGamepad);
       }
       
-    }, 1000);  
+    }, 100);  
 
     window.addEventListener("gamepadconnected", (e:any) => {
       this.joystickService.gamepadConnected(e.gamepad);
+      this.joystickService.EnableGamepad();
+
     });
 
+    
     this.joystickService.getObservable().subscribe(events => this.onGamepadEvent(events))
 
   }
@@ -92,12 +94,12 @@ export class AppComponent {
    }
 
    public selectedlink;
-   private myroutes=['/quick','/trade','/pools','/coins','/wormhole'];
+   private myroutes=['/flipper','/trade','/pools','/coins'];
 
    navigatetoNext(){
       //const myroutedata = this.activatedRoute.snapshot.data;
       let myindex=this.myroutes.indexOf(this.selectedlink);
-      if (myindex===4)
+      if (myindex===3)
         myindex=-1;
         this.selectedlink=this.myroutes[myindex+1];
       let mynext='/'+this.selectedlink;
@@ -110,7 +112,7 @@ export class AppComponent {
    // const myroutedata = this.activatedRoute.snapshot.data;
     let myindex=this.myroutes.indexOf(this.router.url);
     if (myindex===0)
-      myindex=5;
+      myindex=4;
       this.selectedlink=this.myroutes[myindex-1];
     let mynext='/'+this.selectedlink;
     console.log('navigate to route present is:',this.selectedlink);

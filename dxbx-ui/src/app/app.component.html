@@ -1,30 +1,30 @@
-  <button mat-button [routerLink]="['/quick']">Quick</button>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<div class="header" style="min-width: 360px;">
+  <mat-toolbar>
+  <button mat-button [routerLink]="['/flipper']">Flip</button>
   <button mat-button [routerLink]="['/trade']">Trade</button>
   <button mat-button [routerLink]="['/pools']">Pools</button>
   <button mat-button [routerLink]="['/coins']">Coins</button>
   <button mat-button [routerLink]="['/wormhole']">Bridge</button>
   <button mat-button class="mymenuthreepoints"  [matMenuTriggerFor]="menu" ><mat-icon>more_vert</mat-icon></button>
-    <mat-menu  #menu="matMenu">
+  <mat-menu  #menu="matMenu">
       <button mat-menu-item>
         <mat-icon>dialpad</mat-icon>
         <span>Connected</span>
       </button>
       <button mat-menu-item >
         <mat-icon>videogame_asset</mat-icon>
-        <span><mat-slide-toggle  [checked]="false" [disabled]="false" (change)="onToggleSlide( $event)"> Gamepad</mat-slide-toggle></span>
-
+        <span><mat-slide-toggle  [checked]="true" [disabled]="false" (change)="onToggleSlide( $event)"> Gamepad</mat-slide-toggle></span>
       </button>
       <button mat-menu-item>
         <mat-icon>highlight</mat-icon>
         <span>   <app-theme-switch ></app-theme-switch></span>
       </button>
     </mat-menu>
-    
+  </mat-toolbar>
+</div>
 <router-outlet></router-outlet>
-
-
-
-
 
 <div class="footer" #footer>
   <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/risk-warning/saxo-risk-warning';" >Risk</button>
@@ -32,5 +32,4 @@
   <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/privacy-policy/saxo-privacy-policy';">Privacy</button>
   <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/cookie-policy/saxo-cookie-policy';" >Cookie</button>
   <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/copyright/saxo-copyright';" >&#169;2023</button>
- 
-  </div>
+</div>

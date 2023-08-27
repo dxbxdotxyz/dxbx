@@ -21,8 +21,13 @@ import { MatIconModule} from '@angular/material/icon';
 import { WormholeComponent } from './wormhole/wormhole.component';
 import { AgChartsAngularModule } from 'ag-charts-angular';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { GaugeModule } from 'angular-gauge';
+//import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
-import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +41,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     WormholeComponent
   ],
   imports: [
+
+    MatToolbarModule,
+    MatGridListModule,
+    GaugeModule.forRoot(),
+    MatTooltipModule,
     MatSnackBarModule,
     AgChartsAngularModule,
     HttpClientModule,

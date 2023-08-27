@@ -133,16 +133,14 @@ export class JoystickService implements OnInit {
             button : { A: false, B: false, X: false, Y: false, RJ: false, LJ: false, UP: false, DOWN: false, RIGHT: false, LEFT: false, RB: false, LB: false, START: false, SELECT: false},
             axis : { RX : 0, RY : 0, LX : 0, LY : 0, RT : 0, LT : 0}
         }
-        
-        //let gamepad :Gamepad = new Gamepad()  ;
 
+        //todo i had to change tsconfig.json to get rid of the error !!AAARGH
+        // "strict": false,
+        // "strictNullChecks":false,
 
         //if(navigator.getGamepads()[this.joystickID]!==null)
         const  gamepad   = navigator.getGamepads()[this.joystickID] ;
-
-
         const trigger = 0.2
-
         switch(this.mapping){
             case this.mappingCodes.xboxLinux:/*
                 state.button.A = gamepad.buttons[0].pressed

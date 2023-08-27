@@ -10,7 +10,6 @@ import { AgCartesianChartOptions, time } from 'ag-charts-community';
 import { AgChartOptions, AgChartTheme } from 'ag-charts-community';
 import { SharengdataService } from '../sharengdata.service';
 
-
 interface Provider {
   time: number,
   indexvalue: number
@@ -23,7 +22,15 @@ interface Provider {
   })
 
 export class PlayComponent  implements OnInit {
+/***********Tooltip**************** */  
+  public showDelay=100;
+  public hideDelay=10;
 
+  public mygaugevalue=0;
+  public mygaugemax=100;
+
+  public messageexplainBuy:string="BUY 1 USDC of AIP Index";
+  public messageexplainSell:string="SELL 1 USDC of AIP Index";
 
 /*********PLAY LOGIC************************ */
   public indexPosition:number=0;
@@ -31,7 +38,7 @@ export class PlayComponent  implements OnInit {
   private maxTotalBalance:number=10;
   public coinDescription:string="USDC";
   public totalBalance:number=0;
-  public availableBalance:number=0;
+  public availableBalance:number=10;
   public marginBalance:number=0;
   public contractBalance:number=0;
   private minMarginRequired:number=0;
@@ -55,14 +62,11 @@ export class PlayComponent  implements OnInit {
     private myTheme: AgChartTheme;
     
     private indexname:string="AIP41";
-
     @ViewChild(AgChartsAngular)
     public agChart!: AgChartsAngular;
 
     constructor(private mypersistent:LocalstorageService,private myWS:QuickWSService,private myshareddata : SharengdataService, private joystickService : JoystickService ) {
-      
       this.res_stream1=this.myWS.priceindex$;
-
       this.myTheme = {
         baseTheme: 'ag-default-dark',
         palette: {
@@ -125,7 +129,13 @@ export class PlayComponent  implements OnInit {
     }
 
 ngOnInit() {
-    this.stream1=this.res_stream1.subscribe(value_received    => {
+
+      this.myplotdata=[...this.myWS.messages];
+      this.getData();
+      this.updateData()
+
+     // console.log('this.myplotdata',this.myplotdata,this.myWS.messages);
+      this.stream1=this.res_stream1.subscribe(value_received    => {
       this.updateTradingData(value_received-this.rnd_Index);
       this.rnd_Index=value_received;
       this.now=Date.now();
@@ -203,7 +213,19 @@ ngOnDestroy(): void {
   }
 
   public getTotalBalance(){
+    
     this.totalBalance=this.availableBalance+this.marginBalance;
+
+    if (this.contractBalance>0){
+      this.mygaugevalue=this.marginBalance/this.totalBalance*100;
+
+    }else if (this.contractBalance<0){
+      this.mygaugevalue=-this.marginBalance/this.totalBalance*100;;
+    }else{
+      this.mygaugevalue=0;
+    }
+
+
     return this.totalBalance;
   }
   public getAvailableBalance(){
@@ -307,15 +329,15 @@ ngOnDestroy(): void {
         if (this.availableBalance>necessaryMargin){
           this.transferMarginToAvailable(-necessaryMargin);    
           this.contractBalance+=size;
-          console.log('send order 1',this.indexPosition );
+         // console.log('send order 1',this.indexPosition );
           if(size>0){
         //    console.log('send order 1',size/(this.rnd_Index*(1)));
             this.indexPosition+=size/(this.rnd_Index*(1+this.spreadfees));
-            console.log('send order 1',size/(this.rnd_Index*(1+this.spreadfees)) );
+         //   console.log('send order 1',size/(this.rnd_Index*(1+this.spreadfees)) );
           }else{  
             this.indexPosition+=size/(this.rnd_Index*(1-this.spreadfees));
           }
-          console.log('send order 2',this.indexPosition );
+         // console.log('send order 2',this.indexPosition );
        //   this.setTotalBalance();
                    
 
@@ -336,12 +358,19 @@ ngOnDestroy(): void {
    //            this.navigatetoPrevious();
             break;
             case "Y":
-             if(events.length == 1){
-      //         this.PullS();
-             }
-             else if(this.joystickService.lastState.axis.RT >= 0.9){
-      //         this.PullServerHedger();
-             }
+              this.reverseSideClicked();
+              break;
+              case "X":
+              this.closeAllClicked();
+              break;
+              case "A":
+              this.sellClicked();
+              break;
+              case "B":
+              this.buyClicked();
+
+            
+             
             break;
             case "X":
              if(events.length == 2 && this.joystickService.lastState.axis.RT >=0.9){

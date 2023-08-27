@@ -9,23 +9,18 @@ export class QuickWSService {
 
   private priceindex: Subject<number> = new Subject<number>();
   priceindex$ = this.priceindex.asObservable();
-
- 
-
+  private now=Date.now();// : number;
   private MYCNWS: any;
   private interval: any;
+  public messages: any[] = [];
 
   constructor() { 
     this.initCNWebsocket();
-   
   }
 
-
-
   initCNWebsocket(){
-   
+  
     const url ="wss://dxbx.xyz/ws/";
-
     this.MYCNWS= new WebSocket(url);
     const ws=this.MYCNWS;
     ws.onopen = () => {
@@ -37,33 +32,26 @@ export class QuickWSService {
     };
     ws.onerror = (error:any) => {
       console.log('WebSocket dxbx error: ${error}');
-   //   const that=this;
-   //   setTimeout(function(){that.initCNWebsocket(); }, 3000);
     };
     ws.onclose = (code:any, reason:any) => {
-      console.log(`WebSocket dxbx close: ${reason}`);
+      console.log('WebSocket dxbx close: ${error}');
       this.onClose(code,reason);
       const that=this;
       setTimeout(function(){that.initCNWebsocket(); }, 3000);
-    //  this.initCNWebsocket();
     };
   }
 
-
   private onOpen() {
     console.log(`Connected to dxbx_AIP41`);
- 
   }
 
     private onMessage(mymessage:any) {
-      //console.log(`Received message: ${mymessage.data}`);
-
-
       const message = JSON.parse(mymessage.data);
-      //console.log('Received message: ',message.content);
-
-      if (message.type === 'kafka') {
+     if (message.type === 'kafka') {
         this.priceindex.next(message.content);
+        const mytime=Date.now();
+        this.messages.push({ time: mytime, indexvalue:   message.content});   //{time: this.now , indexvalue: value_received});
+        this.messages = this.messages.slice(-30);
       }
     }
    
@@ -92,5 +80,4 @@ export class QuickWSService {
       if (!this.MYCNWS) throw Error('socket is not open');
       this.MYCNWS.send(JSON.stringify(messageObject));
     }
-
 }

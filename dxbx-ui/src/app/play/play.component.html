@@ -1,51 +1,106 @@
+
 <mat-card class="quickCard-card">
     <mat-card-header>
-      <div mat-card-avatar class="quickCard-header-image"></div>
-      <mat-card-title>index (AIP 41) </mat-card-title> <button mat-raised-button color="accent" (click)=addusdc(10) >+10 {{coinDescription}}</button>
-      <mat-card-subtitle>{{rnd_Index | number:'1.4-4'   }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>  
-    <ag-charts-angular
-    style="height: 100%"
-    [options]="options"
-    >
-  </ag-charts-angular>
-</mat-card-content>
 
-  <mat-card-actions class="quickCard-actions" style="width:50%;margin:auto" >
-      <table>
-        <tr>
-          <td ></td>
-          <td><button mat-button color="accent" (click)=reverseSideClicked()>Flip</button></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><button mat-button color="accent" (click)=closeAllClicked()>Close</button></td>
-          <td ></td>
-          <td><button mat-button color="accent" (click)=buyClicked()>Buy</button></td>
-          
-        </tr>
-        <tr>
-          <td ></td>
-          <td><button mat-button color="accent" (click)=sellClicked()>Sell</button></td>
-          <td></td>
-        </tr>
-        <tr>
-        </tr>
-      </table>
-    </mat-card-actions>
+        <div mat-card-avatar class="quickCard-header-image"></div>
+    
+        <mat-card-title><a style="width: 50%;">index (AIP 41)  </a>
+
+        <a style="width: 50%;font-size: x-large; font-weight: bold; margin:auto">{{getTotalBalance() | number:'1.4-4' }}</a>
+         
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{rnd_Index | number:'1.4-4'   }}
+      </mat-card-subtitle>
+
+
+    </mat-card-header>
+
+    
+    <mat-card-content>  
+      <ag-charts-angular
+      style="height: 100%"
+      [options]="options"
+      >
+      </ag-charts-angular>
+    </mat-card-content>
+    <mat-card-actions class="quickCard-actions" style="width:50%;margin:auto" >
+        <table>
+          <tr>
+            <td ></td>
+            
+              <td><button mat-fab style="background-color: darkgrey ;color:yellow;font-size: xx-large;"(click)=reverseSideClicked() [matTooltip]='"FLIP your position"' [matTooltipShowDelay]="showDelay"
+                [matTooltipHideDelay]="hideDelay">Y</button></td>
+              <td></td>
+            </tr>
+            <tr>
+                <td><button mat-fab style="background-color: darkgrey ;color:blue;font-size: xx-large;"(click)=closeAllClicked() [matTooltip]='"CLOSE your position"' [matTooltipShowDelay]="showDelay"
+                [matTooltipHideDelay]="hideDelay">X</button></td>
+            <td ></td>
+              <td><button mat-fab style="background-color: darkgrey ;color:red;font-size: xx-large;"(click)=buyClicked() [matTooltip]="messageexplainBuy" [matTooltipShowDelay]="showDelay"
+                [matTooltipHideDelay]="hideDelay">B</button></td>
+            </tr>
+            <tr>
+            <td ></td>
+            <td><button mat-fab color="accent" style="background-color: darkgrey ;color:green;font-size: xx-large;"(click)=sellClicked() [matTooltip]="messageexplainSell" [matTooltipShowDelay]="showDelay"
+              [matTooltipHideDelay]="hideDelay">A</button></td>
+          </tr>
+          <tr>
+          </tr>
+        </table>
+      </mat-card-actions>
   <mat-card-footer>
     <div class="quickCard-footer">
-      <div class="quickCard-footer-item">
-        <div class="quickCard-footer-item-value" style="font-weight: bold ;">Your Balance {{getTotalBalance() }}</div>
-        <div class="quickCard-footer-item-value"> Available: {{getAvailableBalance()| number:'1.4-4'  }}  </div>
-        <div class="quickCard-footer-item-value"> Margin: {{getMarginBalance()| number:'1.4-4'  }}   </div>
-        <div class="quickCard-footer-item-value"  style="font-weight: bolder;">Contract Balance  {{contractBalance}}</div>
-
-        <div class="quickCard-footer-item-label" style="font-size: x-small; text-align: center;">Trading Size is {{tradingSize}} {{coinDescription}}</div>
-       <!-- <div class="quickCard-footer-item-label">Idx Position {{indexPosition}}</div> -->
+      <mat-grid-list cols="2" rowHeight="2:1">
+        <mat-grid-tile>
+          <div class="quickCard-footer-item">
+            
+          <div class="quickCard-footer-item-value" style="font-weight: bold ;">Your Balance {{getTotalBalance()| number:'1.4-4' }}</div>
+          <div class="quickCard-footer-item-value"> Available: {{getAvailableBalance()| number:'1.4-4'  }}  </div>
+          <div class="quickCard-footer-item-value"> Margin: {{getMarginBalance()| number:'1.4-4'  }}   </div>
+          <div class="quickCard-footer-item-value"  style="font-weight: bolder;">Contract Balance  {{contractBalance}}</div>
+        </div>
+      </mat-grid-tile>
+        <mat-grid-tile> <mwl-gauge
+          [max]=mygaugemax
+          [min]=-mygaugemax
+          [dialStartAngle]="-90"
+          [dialEndAngle]="-90.001"
+          [value]=mygaugevalue
+          [animated]="true"
+          [animationDuration]="1"
+        >
+    
+        </mwl-gauge>
+      </mat-grid-tile>
         
+      <mat-grid-tile>
+        <div class="quickCard-footer-item">
+
+          <button mat-raised-button  [matTooltip]='"TopUp Your Balance to 10 USDC"' [matTooltipShowDelay]="showDelay"
+          [matTooltipHideDelay]="hideDelay"  color="accent" (click)=addusdc(10) >+10 {{coinDescription}}</button>
+          
+  
       </div>
+      </mat-grid-tile>
+
+      </mat-grid-list>
+     
+
+      
+              
+      
+      
+        
+      
+    
+
+      
+  
+    <div class="quickCard-footer-item">
+     
+   
+    </div>
     </div>
   </mat-card-footer>
   </mat-card>
