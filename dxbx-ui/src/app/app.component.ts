@@ -5,6 +5,9 @@ import { JoystickService, JoysticksEvent } from './joystick.service'
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { Router, RouterLinkActive } from '@angular/router';
+import { AptosWalletService } from './aptos-wallet.service';
+import { WalletName } from '@aptos-labs/wallet-adapter-core';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,35 +15,32 @@ import { Router, RouterLinkActive } from '@angular/router';
 })
 export class AppComponent {
   private stream1:any;
-  private res_stream1:Observable<string>;
+  private res_stream1: Observable<string>;
+  
   title = 'dxbx-ui';
   public useGamepad: boolean = false;
   
-  constructor(private myshareddata : SharengdataService,   private _snackBar: MatSnackBar, private joystickService : JoystickService,private router: Router ) {
+  constructor(private myshareddata : SharengdataService,
+      private _snackBar: MatSnackBar,
+      private joystickService : JoystickService,
+      private aptosWalletService : AptosWalletService,
+      private router: Router ) {
     this.res_stream1=this.myshareddata.snackBarMessage$;
-   // this.useGamepad = false;
   }
 
   ngOnInit(): void {
+    console.log('app component init');
     this.stream1=this.res_stream1.subscribe((msg:string) => {
       if (msg.length>0) {
         this.handleMySnackBar(msg);
       }
     });
 
+    
     window.addEventListener("gamepadconnected", (e:any) => {
       this.joystickService.gamepadConnected(e.gamepad);
     });
-    //  window.addEventListener("gamepaddisconnected", (e) => {
-    //   this.joystickService.gamepadDisconnected();
-    //   this.useGamepad = false
-    // });
-    // window.addEventListener("gamepadconnected", (e:any) => {
-    //   this.joystickService.gamepadConnected(e.gamepad);
-    // });
-    //this.joystickService.DisableGamepad();
-
-
+    
     this.useGamepad = false;
     
     
@@ -69,6 +69,7 @@ export class AppComponent {
 
   ngOnDestroy(): void {
     this.stream1.unsubscribe();
+    
   }
 
   handleMySnackBar(msg:string,action:number=0){
@@ -90,6 +91,25 @@ export class AppComponent {
     this.joystickService.DisableGamepad()
     console.log('slidder Toggle enabled',this.useGamepad);
 
+    }
+   }
+   
+
+   public connected:boolean=false;
+
+   onToggleSlideConnect(ev: MatSlideToggleChange){
+
+    console.log('slidder Toggle',this.connected, ev.checked );
+    this.useGamepad=ev.checked;  
+
+    if(this.connected){
+      this.aptosWalletService.disconnectWallet();
+      this.connected=false;
+    } else {
+      const myname="Petra" as WalletName;
+      let ret=this.aptosWalletService.connectWallet(myname);
+      console.log('connectWallet',ret);
+      this.connected=true
     }
    }
 
@@ -167,4 +187,7 @@ export class AppComponent {
       }
     });
   }
+
+  
+
 }

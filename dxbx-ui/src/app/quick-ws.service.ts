@@ -49,7 +49,8 @@ export class QuickWSService {
       const message = JSON.parse(mymessage.data);
      if (message.type === 'kafka') {
         this.priceindex.next(message.content);
-        const mytime=Date.now();
+       const mytime = Date.now();
+       //console.log(`Received message from dxbx_AIP41: ${message.content} at ${mytime}`);
         this.messages.push({ time: mytime, indexvalue:   message.content});   //{time: this.now , indexvalue: value_received});
         this.messages = this.messages.slice(-30);
       }

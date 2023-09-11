@@ -1,5 +1,5 @@
 import { Injectable,OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, iif } from 'rxjs';
 //import{LocalStorageServiceService} from './local-storage-service.service';
 
 //import{GlobalVariables}from './hfc-data.model'
@@ -55,20 +55,18 @@ export class JoystickService implements OnInit {
 
     private mappingCodes = {
         xboxLinux : 0,
-        xinput : 1
+        xinput : 1,
+        ps4 : 2
     }
     private mapping : number=0;
 
     public updatePeriod = 0.05//seconds
 
+    private isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     constructor() {
 
         this.joystickID =0;
-        //this.mypersistent.get(this.param.MainCurrency+'enableJoystickID');
-        // if (this.joystickID)
-        //     this.mypersistent.set(this.param.MainCurrency+'enableJoystickID',this.joystickID); //pretty dull but it is for the first write
-        // else
-        //     this.mypersistent.set(this.param.MainCurrency+'enableJoystickID',0); //pretty dull but it is for the first write
+        this.mapping = this.mappingCodes.ps4;
      }
 
      ngOnInit(): void {
@@ -83,12 +81,27 @@ export class JoystickService implements OnInit {
                         gamepad.index, gamepad.id,
                         gamepad.buttons.length, gamepad.axes.length);
 
-        if(gamepad.id.toLowerCase().includes("xinput") || gamepad.id == "Microsoft Controller (STANDARD GAMEPAD Vendor: 045e Product: 0b12)"){
-            console.log("Controller detected : xinput")
+            console.log("Controller connected2  ",
+                        gamepad.id);
+
+
+
+        if(gamepad.id.toLowerCase().includes("xinput") || gamepad.id == "Microsoft Controller (STANDARD GAMEPAD Vendor: 045e Product: 0b12)" ){
+            console.log("Controller detected1 : xinput")
             this.mapping = this.mappingCodes.xinput
+        }else if( gamepad.id.toLowerCase().includes("8bitdo")){
+            console.log("Controller detected2 : PS4")
+            //this.mapping = this.mappingCodes.ps4;
+
+            
+            if(this.isMobile){
+                this.mapping = this.mappingCodes.xinput
+            } else {
+                this.mapping = this.mappingCodes.ps4;
+            }
         }
         else{
-            console.log("Controller detected : Xbox Linux")
+            console.log("Controller detected3 : Xbox Linux")
             this.mapping = this.mappingCodes.xboxLinux
         }
     }
@@ -141,30 +154,9 @@ export class JoystickService implements OnInit {
         //if(navigator.getGamepads()[this.joystickID]!==null)
         const  gamepad   = navigator.getGamepads()[this.joystickID] ;
         const trigger = 0.2
+      
         switch(this.mapping){
-            case this.mappingCodes.xboxLinux:/*
-                state.button.A = gamepad.buttons[0].pressed
-                state.button.B = gamepad.buttons[1].pressed
-                state.button.X = gamepad.buttons[2].pressed
-                state.button.Y = gamepad.buttons[3].pressed
-                state.button.LB = gamepad.buttons[4].pressed
-                state.button.RB = gamepad.buttons[5].pressed
-                state.button.SELECT = gamepad.buttons[6].pressed
-                state.button.START = gamepad.buttons[7].pressed
-                state.button.LJ = gamepad.buttons[9].pressed
-                state.button.RJ = gamepad.buttons[10].pressed
-                state.button.UP = gamepad.axes[7] == -1
-                state.button.DOWN = gamepad.axes[7] == 1
-                state.button.LEFT = gamepad.axes[6] == -1
-                state.button.RIGHT = gamepad.axes[6] == 1
-                state.axis.LX = Math.abs(gamepad.axes[0]) > trigger ? gamepad.axes[0] : 0
-                state.axis.LY = Math.abs(gamepad.axes[1]) > trigger ? -gamepad.axes[1] : 0
-                state.axis.RX = Math.abs(gamepad.axes[3]) > trigger ? gamepad.axes[3] : 0
-                state.axis.RY = Math.abs(gamepad.axes[4]) > trigger ? -gamepad.axes[4] : 0
-                state.axis.LT = gamepad.axes[2] == 0 ? 0 : (gamepad.axes[2] + 1)/2//At init, axis are at 0
-                state.axis.RT = gamepad.axes[5] == 0 ? 0 : (gamepad.axes[5] + 1)/2
-
-                */
+            case this.mappingCodes.xboxLinux:
                 state.button.A = gamepad.buttons[0].pressed
                 state.button.B = gamepad.buttons[1].pressed
                 state.button.X = gamepad.buttons[2].pressed
@@ -210,6 +202,31 @@ export class JoystickService implements OnInit {
                 state.axis.LT = gamepad.buttons[6].value
                 state.axis.RT = gamepad.buttons[7].value
             break;
+            case this.mappingCodes.ps4:
+                state.button.A = gamepad.buttons[0].pressed;
+                state.button.B = gamepad.buttons[1].pressed;;
+                state.button.X = gamepad.buttons[3].pressed;;
+                state.button.Y = gamepad.buttons[4].pressed;;
+                state.button.LB = gamepad.buttons[6].pressed;
+                state.button.RB = gamepad.buttons[7].pressed;
+                state.button.SELECT = gamepad.buttons[10].pressed;
+                state.button.START = gamepad.buttons[11].pressed;
+                state.button.LJ = gamepad.buttons[8].pressed;
+                state.button.RJ = gamepad.buttons[9].pressed;
+                // state.button.UP = gamepad.buttons[12].pressed;
+                // state.button.DOWN = gamepad.buttons[13].pressed;
+                // state.button.LEFT = gamepad.buttons[14].pressed;
+                // state.button.RIGHT = gamepad.buttons[15].pressed;
+                // state.axis.LX = Math.abs(gamepad.axes[0]) > trigger ? gamepad.axes[0] : 0;
+                // state.axis.LY = Math.abs(gamepad.axes[1]) > trigger ? -gamepad.axes[1] : 0;
+                // state.axis.RX = Math.abs(gamepad.axes[2]) > trigger ? gamepad.axes[2] : 0;
+                // state.axis.RY = Math.abs(gamepad.axes[3]) > trigger ? -gamepad.axes[3] : 0;
+                // state.axis.LT = gamepad.buttons[6].value;
+                // state.axis.RT = gamepad.buttons[7].value;
+            break;
+
+           
+
         }
 
 

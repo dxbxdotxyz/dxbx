@@ -1,0 +1,35 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../../aptos-core/aptos-move/move-examples/move-tutorial/step_4_sol"
+    },
+    {
+      "path": "../DEV-MOVE/angular_test_aptos_wallet_adapter/testWallet"
+    },
+    {
+      "path": "../../aptos-core/aptos-move/move-examples/mint_nft"
+    },
+    {
+      "path": "../DEV-MOVE/resource_accounts"
+    },
+    {
+      "path": "../../aptos-core/aptos-move/e2e-move-tests"
+    },
+    {
+      "path": "../DEV-MOVE/counter"
+    },
+    {
+      "path": "../DEV-MOVE/dutch_one"
+    },
+    {
+      "path": "../DEV-MOVE/firstapp"
+    },
+    {
+      "path": "../DEV-MOVE"
+    }
+  ],
+  "settings": {}
+}

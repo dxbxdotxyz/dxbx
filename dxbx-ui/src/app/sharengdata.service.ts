@@ -29,6 +29,8 @@ export class SharengdataService {
   }
 
 
+  public isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   // toggleYourValue(): void {
   //   this._yourValue.next(!this._yourValue.getValue());
   // }

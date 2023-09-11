@@ -6,7 +6,7 @@
     
         <mat-card-title><a style="width: 50%;">index (AIP 41)  </a>
 
-        <a style="width: 50%;font-size: x-large; font-weight: bold; margin:auto">{{getTotalBalance() | number:'1.4-4' }}</a>
+        
          
       </mat-card-title>
       <mat-card-subtitle>
@@ -24,8 +24,12 @@
       >
       </ag-charts-angular>
     </mat-card-content>
-    <mat-card-actions class="quickCard-actions" style="width:50%;margin:auto" >
-        <table>
+    
+    
+    <mat-card-actions class="quickCard-actions"  >
+      
+    
+        <table class="button-box" style=getstyle()>
           <tr>
             <td ></td>
             
@@ -48,57 +52,54 @@
           <tr>
           </tr>
         </table>
+     
       </mat-card-actions>
+     
   <mat-card-footer>
     <div class="quickCard-footer">
       <mat-grid-list cols="2" rowHeight="2:1">
+        <mat-grid-tile style="text-align:left;font-weight: bolder">
+
+       {{getFeelling()}}
+
+           </mat-grid-tile>
         <mat-grid-tile>
           <div class="quickCard-footer-item">
-            
-          <div class="quickCard-footer-item-value" style="font-weight: bold ;">Your Balance {{getTotalBalance()| number:'1.4-4' }}</div>
-          <div class="quickCard-footer-item-value"> Available: {{getAvailableBalance()| number:'1.4-4'  }}  </div>
-          <div class="quickCard-footer-item-value"> Margin: {{getMarginBalance()| number:'1.4-4'  }}   </div>
-          <div class="quickCard-footer-item-value"  style="font-weight: bolder;">Contract Balance  {{contractBalance}}</div>
-        </div>
-      </mat-grid-tile>
-        <mat-grid-tile> <mwl-gauge
-          [max]=mygaugemax
-          [min]=-mygaugemax
+            <div class="quickCard-footer-item-value" style="text-align :right"> Available: {{getAvailableBalance()| number:'1.4-4'  }}  </div>
+            <div class="quickCard-footer-item-value" style="text-align:right"> Margin: {{getMarginBalance()| number:'1.4-4'  }}   </div>
+            <div class="quickCard-footer-item-value"  style="text-align:right;font-weight: bolder;">Contract Balance  {{contractBalance}}</div>
+          </div>
+          <!-- <mwl-gauge
+          [max]=100
+          [min]=-100
           [dialStartAngle]="-90"
-          [dialEndAngle]="-90.001"
+          [dialEndAngle]="-90"
           [value]=mygaugevalue
           [animated]="true"
-          [animationDuration]="1"
+          [animationDuration]="2"
         >
     
         </mwl-gauge>
-      </mat-grid-tile>
-        
-      <mat-grid-tile>
-        <div class="quickCard-footer-item">
-
-          <button mat-raised-button  [matTooltip]='"TopUp Your Balance to 10 USDC"' [matTooltipShowDelay]="showDelay"
-          [matTooltipHideDelay]="hideDelay"  color="accent" (click)=addusdc(10) >+10 {{coinDescription}}</button>
-          
-  
-      </div>
+        -->
       </mat-grid-tile>
 
-      </mat-grid-list>
+    <mat-grid-tile>
      
+          <a style="width: 50%;font-size: x-large; font-weight: bold; margin:auto">Balance {{getTotalBalance() | number:'1.4-4'}}</a>
+     
+    </mat-grid-tile>
 
-      
-              
-      
-      
-        
-      
-    
 
-      
-  
+    <mat-grid-tile>
+    <button mat-raised-button  [matTooltip]='"TopUp Your Balance to 10"' [matTooltipShowDelay]="showDelay"
+    [matTooltipHideDelay]="hideDelay"  color="accent" (click)=addcoins(10) >+10 {{coinDescription}}</button>
+
+  </mat-grid-tile>
+
+    </mat-grid-list>  
     <div class="quickCard-footer-item">
-     
+    
+ 
    
     </div>
     </div>

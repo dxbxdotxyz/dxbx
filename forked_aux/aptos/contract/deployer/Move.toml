@@ -1,0 +1,22 @@
+[package]
+name = 'deployer'
+version = '1.0.0'
+
+[addresses]
+AptosFramework = "0x1"
+# deployer = "_"
+deployer = "0x6071254b8c2e2f3f9543a21420b39b68feac32d66145e7f218fdec8cf2f80f2c"
+
+
+
+[dev-addresses]
+deployer = "0x6071254b8c2e2f3f9543a21420b39b68feac32d66145e7f218fdec8cf2f80f2c"
+
+[dependencies.AptosFramework]
+git = 'https://github.com/aptos-labs/aptos-core.git'
+## rev = '0377a5f9825110c63b741b0a6d735ff6b4f945b7'
+
+rev = 'devnet'
+
+
+subdir = 'aptos-move/framework/aptos-framework'

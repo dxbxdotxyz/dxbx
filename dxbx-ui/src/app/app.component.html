@@ -6,12 +6,14 @@
   <button mat-button [routerLink]="['/trade']">Trade</button>
   <button mat-button [routerLink]="['/pools']">Pools</button>
   <button mat-button [routerLink]="['/coins']">Coins</button>
-  <button mat-button [routerLink]="['/wormhole']">Bridge</button>
+  
   <button mat-button class="mymenuthreepoints"  [matMenuTriggerFor]="menu" ><mat-icon>more_vert</mat-icon></button>
   <mat-menu  #menu="matMenu">
       <button mat-menu-item>
-        <mat-icon>dialpad</mat-icon>
-        <span>Connected</span>
+
+        <mat-icon>{{connected ? 'link' : 'link_off'}}</mat-icon>
+
+        <span><mat-slide-toggle  [checked]="false" [disabled]="false" (change)="onToggleSlideConnect( $event)"> {{connected ? 'disconnect' : 'connect'}}</mat-slide-toggle></span>
       </button>
       <button mat-menu-item >
         <mat-icon>videogame_asset</mat-icon>
@@ -22,14 +24,18 @@
         <span>   <app-theme-switch ></app-theme-switch></span>
       </button>
     </mat-menu>
+    
   </mat-toolbar>
 </div>
-<router-outlet></router-outlet>
+<router-outlet ></router-outlet>
 
 <div class="footer" #footer>
-  <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/risk-warning/saxo-risk-warning';" >Risk</button>
-  <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/terms-of-use/saxo-terms-of-use';" >Terms</button>
-  <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/privacy-policy/saxo-privacy-policy';">Privacy</button>
-  <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/cookie-policy/saxo-cookie-policy';" >Cookie</button>
-  <button mat-button onclick="window.location.href='https://www.home.saxo/en-gb/legal/copyright/saxo-copyright';" >&#169;2023</button>
+  <button mat-button disabled="true" onclick="window.location.href='https://www.home.sax/en-gb/legal/risk-warning/saxo-risk-warning';" >Risk</button>
+  <button mat-button disabled="true" onclick="window.location.href='https://www.home.sax/en-gb/legal/terms-of-use/saxo-terms-of-use';" >Terms</button>
+  
+  <button mat-button disabled="true" onclick="window.location.href='https://www.home.sax/en-gb/legal/cookie-policy/saxo-cookie-policy';" >Cookie</button>
+  <button mat-button disabled="true" onclick="window.location.href='https://www.home.sax/en-gb/legal/copyright/saxo-copyright';" >&#169;2023</button>
+  <button mat-button [routerLink]="['/wormhole']">Bridge</button>
+    <button mat-button >DEVOnly</button>
+
 </div>
